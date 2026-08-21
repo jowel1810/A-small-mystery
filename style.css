@@ -578,21 +578,40 @@ html, body {
    ========================================================= */
 @media (max-width: 600px) {
 
+  /* ROOT CAUSE FIX: every font-size, padding, and gap on this site is
+     defined in rem, which is calculated from this html font-size.
+     It was never adjusted for mobile, so every element below was
+     still scaling off a 16px base no matter how large we made its
+     own rule — which is why the whole site kept reading as a shrunk
+     desktop layout. Raising it here is the single lever that scales
+     every scene's text, spacing, and buttons together, consistently. */
+  html {
+    font-size: 118%; /* ~18.9px base instead of 16px — applies globally */
+  }
+
   body {
     line-height: 1.55;
   }
 
-  /* Content sits close to the user; side margins never drop below 16px */
+  /* Shared wrapper used by every scene: full-width content, tighter
+     vertical padding so content sits close instead of floating in
+     empty space, side padding held at a comfortable 16-20px. */
   .scene {
-    padding-top: 3.5vh;
-    padding-bottom: 3.5vh;
+    padding-top: 2.5vh;
+    padding-bottom: 2.5vh;
     padding-left: max(16px, 4vw);
     padding-right: max(16px, 4vw);
   }
 
   .scene-inner {
     max-width: 100%;
+    width: 100%;
     gap: 0.9rem;
+  }
+
+  .scene-inner--full {
+    max-width: 100%;
+    width: 100%;
   }
 
   /* ---------- Scene 1 — console / loading ---------- */
