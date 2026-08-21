@@ -1,139 +1,125 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>a small mystery</title>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>a small mystery</title>
 
-    <!-- Fonts: Cormorant Garamond (display) + Jost (body/UI) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+<!-- Fonts: Cormorant Garamond (display) + Jost (body/UI) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Background canvas shared by every scene: stars / particles -->
-    <canvas id="bg-canvas"></canvas>
+<link rel="stylesheet" href="style.css?v=2" />
+</head>
+<body>
 
-    <!-- Sound toggle, hidden until audio is available -->
-    <button
-      id="sound-toggle"
-      class="sound-toggle"
-      aria-label="Toggle sound"
-      hidden
-    >
-      <span class="sound-icon">♪</span>
-    </button>
+  <!-- Background canvas shared by every scene: stars / particles -->
+  <canvas id="bg-canvas"></canvas>
 
-    <main id="stage">
-      <!-- ============================================= -->
-      <!-- SCENE 1 — MYSTERIOUS LOADING SCREEN -->
-      <!-- ============================================= -->
-      <section class="scene scene--active" id="scene-1" data-scene="1">
-        <div class="scene-inner console-block">
-          <p class="console-line" id="console-line-1"></p>
-          <p class="console-line" id="console-line-2"></p>
-          <p class="console-line" id="console-line-3"></p>
-          <p class="console-line" id="console-line-4"></p>
+  <!-- Sound toggle, hidden until audio is available -->
+  <button id="sound-toggle" class="sound-toggle" aria-label="Toggle sound" hidden>
+    <span class="sound-icon">♪</span>
+  </button>
 
-          <div class="reveal-group" id="scene1-followup">
-            <p class="whisper">This little website has only one purpose.</p>
-            <button class="enter-btn" id="enter-btn">
-              <span>ENTER</span>
-              <span class="enter-btn__mark">✦</span>
-            </button>
+  <main id="stage">
+
+    <!-- ============================================= -->
+    <!-- SCENE 1 — MYSTERIOUS LOADING SCREEN -->
+    <!-- ============================================= -->
+    <section class="scene scene--active" id="scene-1" data-scene="1">
+      <div class="scene-inner console-block">
+        <p class="console-line" id="console-line-1"></p>
+        <p class="console-line" id="console-line-2"></p>
+        <p class="console-line" id="console-line-3"></p>
+        <p class="console-line" id="console-line-4"></p>
+
+        <div class="reveal-group" id="scene1-followup">
+          <p class="whisper">This little website has only one purpose.</p>
+          <button class="enter-btn" id="enter-btn">
+            <span>ENTER</span>
+            <span class="enter-btn__mark">✦</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SCENE 2 — NAME REVEAL -->
+    <!-- ============================================= -->
+    <section class="scene" id="scene-2" data-scene="2">
+      <div class="scene-inner">
+        <h1 class="name-reveal" id="name-reveal"></h1>
+        <p class="fade-line" id="scene2-line1">You probably weren't expecting this.</p>
+        <p class="fade-line" id="scene2-line2">And that's exactly the point.</p>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SCENE 3 — INTERACTIVE STARS -->
+    <!-- ============================================= -->
+    <section class="scene" id="scene-3" data-scene="3">
+      <div class="scene-inner scene-inner--full">
+        <p class="tap-hint" id="tap-hint">tap a star ✦</p>
+        <div class="star-field" id="star-field"></div>
+        <p class="star-progress" id="star-progress"></p>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SCENE 4 — THE REVEAL -->
+    <!-- ============================================= -->
+    <section class="scene" id="scene-4" data-scene="4">
+      <div class="scene-inner">
+        <div class="emoji-burst" id="emoji-burst" aria-hidden="true"></div>
+        <div class="title-glow" id="title-glow" aria-hidden="true"></div>
+        <h1 class="birthday-title" id="birthday-title">HAPPY BIRTHDAY</h1>
+        <p class="birthday-name" id="birthday-name"></p>
+        <div class="continue-wrap">
+          <button class="ghost-btn" id="to-letter-btn">continue</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= -->
+    <!-- SCENE 5 — THE LETTER -->
+    <!-- ============================================= -->
+    <section class="scene" id="scene-5" data-scene="5">
+      <div class="scene-inner">
+
+        <div class="letter-prompt" id="letter-prompt">
+          <p class="whisper">There's one more thing.</p>
+          <button class="ghost-btn" id="open-letter-btn">Open it →</button>
+        </div>
+
+        <div class="envelope" id="envelope" hidden>
+          <div class="envelope__card">
+            <p class="envelope__text" id="envelope-text"></p>
+            <button class="ghost-btn ghost-btn--small" id="finish-letter-btn">close your eyes for a second</button>
           </div>
         </div>
-      </section>
 
-      <!-- ============================================= -->
-      <!-- SCENE 2 — NAME REVEAL -->
-      <!-- ============================================= -->
-      <section class="scene" id="scene-2" data-scene="2">
-        <div class="scene-inner">
-          <h1 class="name-reveal" id="name-reveal"></h1>
-          <p class="fade-line" id="scene2-line1">
-            You probably weren't expecting this.
-          </p>
-          <p class="fade-line" id="scene2-line2">
-            And that's exactly the point.
-          </p>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ============================================= -->
-      <!-- SCENE 3 — INTERACTIVE STARS -->
-      <!-- ============================================= -->
-      <section class="scene" id="scene-3" data-scene="3">
-        <div class="scene-inner scene-inner--full">
-          <p class="tap-hint" id="tap-hint">Touch the stars ✦</p>
-          <div class="star-field" id="star-field"></div>
-          <p class="star-progress" id="star-progress"></p>
-        </div>
-      </section>
+    <!-- ============================================= -->
+    <!-- SCENE 6 — FINAL MOMENT -->
+    <!-- ============================================= -->
+    <section class="scene" id="scene-6" data-scene="6">
+      <div class="scene-inner">
+        <p class="fade-line" id="final-line1">And yes...</p>
+        <p class="fade-line" id="final-line2">I really made a whole website just to wish you.</p>
+        <p class="fade-line fade-line--gold" id="final-line3">Worth it.</p>
 
-      <!-- ============================================= -->
-      <!-- SCENE 4 — THE REVEAL -->
-      <!-- ============================================= -->
-      <section class="scene" id="scene-4" data-scene="4">
-        <div class="scene-inner">
-          <div class="emoji-burst" id="emoji-burst" aria-hidden="true"></div>
-          <div class="title-glow" id="title-glow" aria-hidden="true"></div>
-          <h1 class="birthday-title" id="birthday-title">HAPPY BIRTHDAY</h1>
-          <p class="birthday-name" id="birthday-name"></p>
-          <div class="continue-wrap">
-            <button class="ghost-btn" id="to-letter-btn">continue</button>
-          </div>
-        </div>
-      </section>
+        <h1 class="final-title" id="final-title"></h1>
+        <p class="final-sub">I hope this year is kind to you.</p>
 
-      <!-- ============================================= -->
-      <!-- SCENE 5 — THE LETTER -->
-      <!-- ============================================= -->
-      <section class="scene" id="scene-5" data-scene="5">
-        <div class="scene-inner">
-          <div class="letter-prompt" id="letter-prompt">
-            <p class="whisper">There's one more thing.</p>
-            <button class="ghost-btn" id="open-letter-btn">Open it →</button>
-          </div>
+        <button class="ghost-btn replay-btn" id="replay-btn">Replay ↻</button>
+      </div>
+    </section>
 
-          <div class="envelope" id="envelope" hidden>
-            <div class="envelope__card">
-              <p class="envelope__text" id="envelope-text"></p>
-              <button class="ghost-btn ghost-btn--small" id="finish-letter-btn">
-                Touch me!
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+  </main>
 
-      <!-- ============================================= -->
-      <!-- SCENE 6 — FINAL MOMENT -->
-      <!-- ============================================= -->
-      <section class="scene" id="scene-6" data-scene="6">
-        <div class="scene-inner">
-          <p class="fade-line" id="final-line1">And yes...</p>
-          <p class="fade-line" id="final-line2">
-            I really made a whole website just to wish you.
-          </p>
-          <p class="fade-line fade-line--gold" id="final-line3">Worth it.</p>
-
-          <h1 class="final-title" id="final-title"></h1>
-          <p class="final-sub">I hope this year is kind to you.</p>
-
-          <button class="ghost-btn replay-btn" id="replay-btn">Replay ↻</button>
-        </div>
-      </section>
-    </main>
-
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js?v=2"></script>
+</body>
 </html>
