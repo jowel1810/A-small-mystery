@@ -240,7 +240,7 @@ html, body {
   transform: translateX(-50%);
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(2rem, 3vw, 1.3rem);
+  font-size: clamp(1rem, 3vw, 1.3rem);
   color: var(--ink-dim);
   letter-spacing: 0.02em;
   opacity: 0.85;
@@ -261,8 +261,8 @@ html, body {
 
 .star {
   position: absolute;
-  width: 17px;
-  height: 17px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: radial-gradient(circle, #ffffff 0%, var(--gold) 55%, transparent 75%);
   box-shadow: 0 0 10px 2px var(--gold-soft);
@@ -570,14 +570,170 @@ html, body {
 .sound-toggle:hover { border-color: var(--gold); }
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE — mobile pass (≈360px–430px phones)
+   Desktop/tablet rules above are untouched; everything here only
+   overrides sizing, spacing and line-height for small screens.
    ========================================================= */
 @media (max-width: 480px) {
-  .scene { padding: 6vh 6vw; }
-  .console-block { max-width: 100%; }
-  .star { width: 12px; height: 12px; }
-  .star-message { max-width: 78vw; }
-  .emoji-particle { font-size: 0.85em; }
+
+  body {
+    line-height: 1.5;
+  }
+
+  /* Scenes sit closer to content and never let text touch the edges */
+  .scene {
+    padding: 5vh 5.5vw;
+  }
+
+  .scene-inner {
+    gap: 0.95rem;
+  }
+
+  /* ---------- Scene 1 — console / loading ---------- */
+  .console-block {
+    max-width: 100%;
+  }
+
+  .console-line {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reveal-group {
+    margin-top: 2.1rem;
+    gap: 1.5rem;
+  }
+
+  .whisper {
+    font-size: 1.3rem;
+    line-height: 1.45;
+    padding: 0 2px;
+  }
+
+  .enter-btn {
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    padding: 1.05rem 2rem;
+    min-height: 48px;
+  }
+
+  /* ---------- Scene 2 — name reveal ---------- */
+  .name-reveal {
+    font-size: 2.7rem;
+    line-height: 1.15;
+  }
+
+  .fade-line {
+    font-size: 1.08rem;
+    line-height: 1.6;
+    padding: 0 4px;
+  }
+
+  .fade-line--gold {
+    font-size: 1.35rem;
+  }
+
+  /* ---------- Scene 3 — interactive stars ---------- */
+  .tap-hint {
+    top: 9%;
+    font-size: 1.08rem;
+  }
+
+  .star {
+    width: 17px;
+    height: 17px;
+  }
+
+  .star::before {
+    inset: -18px; /* keeps a comfortably large tap target */
+  }
+
+  .star-message {
+    max-width: 82vw;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    padding: 1rem 1.3rem;
+  }
+
+  .star-progress {
+    font-size: 0.8rem;
+    bottom: 5%;
+  }
+
+  /* ---------- Scene 4 — birthday reveal ---------- */
+  .birthday-title {
+    font-size: 2.9rem;
+    line-height: 1.1;
+  }
+
+  .birthday-name {
+    font-size: 1.45rem;
+  }
+
+  .continue-wrap {
+    margin-top: 2.4rem;
+  }
+
+  .emoji-particle {
+    font-size: 0.85em;
+  }
+
+  /* ---------- Shared ghost buttons ---------- */
+  .ghost-btn {
+    font-size: 0.85rem;
+    padding: 1rem 1.8rem;
+    min-height: 48px;
+  }
+
+  .ghost-btn--small {
+    font-size: 0.78rem;
+    padding: 0.85rem 1.4rem;
+    min-height: 44px;
+  }
+
+  /* ---------- Scene 5 — letter / envelope ---------- */
+  .letter-prompt {
+    gap: 1.5rem;
+  }
+
+  .envelope {
+    max-width: 100%;
+  }
+
+  .envelope__card {
+    padding: 1.9rem 1.35rem;
+    border-radius: 16px;
+  }
+
+  .envelope__text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-bottom: 1.6rem;
+  }
+
+  /* ---------- Scene 6 — final moment ---------- */
+  .final-title {
+    font-size: 2.15rem;
+    line-height: 1.25;
+    margin-top: 1.1rem;
+  }
+
+  .final-sub {
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+
+  .replay-btn {
+    margin-top: 2.1rem;
+  }
+
+  /* ---------- Sound toggle — comfortable tap size ---------- */
+  .sound-toggle {
+    width: 44px;
+    height: 44px;
+    top: 16px;
+    right: 16px;
+  }
 }
 
 /* =========================================================
