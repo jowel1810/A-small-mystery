@@ -570,169 +570,178 @@ html, body {
 .sound-toggle:hover { border-color: var(--gold); }
 
 /* =========================================================
-   RESPONSIVE — mobile pass (≈360px–430px phones)
-   Desktop/tablet rules above are untouched; everything here only
-   overrides sizing, spacing and line-height for small screens.
+   RESPONSIVE — mobile pass (phones up to 600px wide)
+   Desktop/tablet rules above are completely untouched.
+   Sizes below are deliberately explicit (rem/px), not fluid
+   clamp() values, so text has a guaranteed comfortable minimum
+   on a 360px–430px phone instead of scaling down with it.
    ========================================================= */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
 
   body {
-    line-height: 1.5;
+    line-height: 1.55;
   }
 
-  /* Scenes sit closer to content and never let text touch the edges */
+  /* Content sits close to the user; side margins never drop below 16px */
   .scene {
-    padding: 5vh 5.5vw;
+    padding-top: 3.5vh;
+    padding-bottom: 3.5vh;
+    padding-left: max(16px, 4vw);
+    padding-right: max(16px, 4vw);
   }
 
   .scene-inner {
-    gap: 0.95rem;
+    max-width: 100%;
+    gap: 0.9rem;
   }
 
   /* ---------- Scene 1 — console / loading ---------- */
   .console-block {
     max-width: 100%;
+    width: 100%;
   }
 
   .console-line {
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: 1.15rem;
+    line-height: 1.65;
   }
 
   .reveal-group {
-    margin-top: 2.1rem;
+    margin-top: 1.9rem;
     gap: 1.5rem;
   }
 
   .whisper {
-    font-size: 1.3rem;
-    line-height: 1.45;
-    padding: 0 2px;
+    font-size: 1.55rem;
+    line-height: 1.5;
   }
 
   .enter-btn {
-    font-size: 0.85rem;
-    letter-spacing: 0.22em;
-    padding: 1.05rem 2rem;
-    min-height: 48px;
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+    padding: 1.1rem 2.2rem;
+    min-height: 52px;
   }
 
   /* ---------- Scene 2 — name reveal ---------- */
   .name-reveal {
-    font-size: 2.7rem;
+    font-size: 3.1rem;
     line-height: 1.15;
+    overflow-wrap: break-word;
   }
 
   .fade-line {
-    font-size: 1.08rem;
+    font-size: 1.25rem;
     line-height: 1.6;
-    padding: 0 4px;
   }
 
   .fade-line--gold {
-    font-size: 1.35rem;
+    font-size: 1.55rem;
   }
 
   /* ---------- Scene 3 — interactive stars ---------- */
   .tap-hint {
-    top: 9%;
-    font-size: 1.08rem;
+    top: 8%;
+    font-size: 1.25rem;
   }
 
   .star {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
   }
 
   .star::before {
-    inset: -18px; /* keeps a comfortably large tap target */
+    inset: -18px; /* comfortably large tap target */
   }
 
   .star-message {
-    max-width: 82vw;
-    font-size: 1.08rem;
-    line-height: 1.5;
-    padding: 1rem 1.3rem;
+    max-width: 88vw;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    padding: 1.1rem 1.4rem;
   }
 
   .star-progress {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     bottom: 5%;
   }
 
   /* ---------- Scene 4 — birthday reveal ---------- */
   .birthday-title {
-    font-size: 2.9rem;
-    line-height: 1.1;
+    font-size: 3.1rem;
+    line-height: 1.15;
+    letter-spacing: 0.005em;
   }
 
   .birthday-name {
-    font-size: 1.45rem;
+    font-size: 1.7rem;
   }
 
   .continue-wrap {
-    margin-top: 2.4rem;
+    margin-top: 2.2rem;
   }
 
   .emoji-particle {
-    font-size: 0.85em;
+    font-size: 0.9em;
   }
 
   /* ---------- Shared ghost buttons ---------- */
   .ghost-btn {
-    font-size: 0.85rem;
-    padding: 1rem 1.8rem;
-    min-height: 48px;
+    font-size: 0.95rem;
+    padding: 1.05rem 2rem;
+    min-height: 50px;
   }
 
   .ghost-btn--small {
-    font-size: 0.78rem;
-    padding: 0.85rem 1.4rem;
-    min-height: 44px;
+    font-size: 0.85rem;
+    padding: 0.9rem 1.6rem;
+    min-height: 46px;
   }
 
   /* ---------- Scene 5 — letter / envelope ---------- */
   .letter-prompt {
-    gap: 1.5rem;
+    gap: 1.4rem;
   }
 
   .envelope {
     max-width: 100%;
+    width: 100%;
   }
 
   .envelope__card {
-    padding: 1.9rem 1.35rem;
+    padding: 1.7rem 1.2rem;
     border-radius: 16px;
   }
 
   .envelope__text {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    margin-bottom: 1.6rem;
+    font-size: 1.3rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
   }
 
   /* ---------- Scene 6 — final moment ---------- */
   .final-title {
-    font-size: 2.15rem;
+    font-size: 2.5rem;
     line-height: 1.25;
-    margin-top: 1.1rem;
+    margin-top: 1rem;
   }
 
   .final-sub {
-    font-size: 1.02rem;
+    font-size: 1.15rem;
     line-height: 1.6;
   }
 
   .replay-btn {
-    margin-top: 2.1rem;
+    margin-top: 2rem;
   }
 
   /* ---------- Sound toggle — comfortable tap size ---------- */
   .sound-toggle {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     top: 16px;
     right: 16px;
+    font-size: 1.05rem;
   }
 }
 
