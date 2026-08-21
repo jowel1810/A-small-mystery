@@ -16,7 +16,7 @@ you genuinely enjoy, people who make
 you happy, and moments you'll want
 to remember.
 
-Happy Birthday. 🎂 💖 ✨`;
+Happy Birthday. 🎂 ✨ 💖`;
 
 // Optional background music. Leave as an empty string to skip audio entirely.
 // If you add a file, place it at assets/music.mp3 and set the path below.
@@ -243,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let starsClicked = 0;
   let starPositions = [];
   let scene3Built = false;
+  let nextMessageIndex = 0; // messages always reveal in STAR_MESSAGES order, regardless of tap order
 
   function buildStars() {
     if (scene3Built) return;
@@ -252,10 +253,53 @@ document.addEventListener("DOMContentLoaded", () => {
     const w = window.innerWidth;
     const h = window.innerHeight;
 
+    // Safe zone as % of viewport — keeps stars clear of the "tap a star"
+    // hint near the top and the progress counter near the bottom.
+    const xMinPct = 10, xMaxPct = 90;
+    const yMinPct = 22, yMaxPct = 88;
+
+    // Minimum distance (in real pixels) between star centers, so their
+    // touch targets (visible dot + its enlarged invisible tap zone) never
+    // overlap. Scales gently with the smaller viewport dimension so it
+    // stays sane on both small phones and large desktop screens.
+    const minDistancePx = Math.max(58, Math.min(96, Math.min(w, h) * 0.16));
+
+    const placedPx = [];
+    const positions = [];
+
     for (let i = 0; i < count; i++) {
-      // scatter stars with generous margins so they never sit under the hint text
-      const x = 12 + Math.random() * 76; // percent
-      const y = 24 + Math.random() * 62; // percent
+      let placed = false;
+      let attempt = 0;
+      let currentMin = minDistancePx;
+
+      while (!placed) {
+        const xPct = xMinPct + Math.random() * (xMaxPct - xMinPct);
+        const yPct = yMinPct + Math.random() * (yMaxPct - yMinPct);
+        const xPx = (xPct / 100) * w;
+        const yPx = (yPct / 100) * h;
+
+        const farEnough = placedPx.every((p) => {
+          const dx = p.x - xPx;
+          const dy = p.y - yPx;
+          return Math.sqrt(dx * dx + dy * dy) >= currentMin;
+        });
+
+        if (farEnough || attempt > 400) {
+          placedPx.push({ x: xPx, y: yPx });
+          positions.push({ xPct, yPct });
+          placed = true;
+        }
+
+        attempt++;
+        // relax the constraint gradually so placement always terminates,
+        // even on unusually small or oddly-shaped viewports
+        if (attempt % 60 === 0) currentMin *= 0.85;
+      }
+    }
+
+    positions.forEach((pos, i) => {
+      const x = pos.xPct;
+      const y = pos.yPct;
 
       const star = document.createElement("div");
       star.className = "star";
@@ -264,33 +308,75 @@ document.addEventListener("DOMContentLoaded", () => {
       star.style.animationDelay = (Math.random() * 3).toFixed(2) + "s";
       star.dataset.index = i;
 
+      // Message text is assigned at click-time (see handleStarClick) so
+      // the reveal order always follows STAR_MESSAGES, no matter which
+      // star the user taps first.
       const message = document.createElement("p");
       message.className = "star-message";
-      message.textContent = STAR_MESSAGES[i];
-      message.style.left = x + "%";
-      message.style.top = y + "%";
 
       star.addEventListener("click", () => handleStarClick(star, message), { once: true });
 
       starField.appendChild(star);
       starField.appendChild(message);
       starPositions.push({ el: star, x, y });
-    }
+    });
 
     updateProgress();
   }
 
+  // Positions a star's message so it always stays fully inside the
+  // viewport, with a comfortable margin on every side. Prefers floating
+  // above the star; falls back to below when there isn't room above;
+  // clamps left/right so edge-hugging stars never push the message
+  // off-screen.
+  function positionStarMessage(star, message) {
+    const margin = 16;
+    const containerRect = starField.getBoundingClientRect();
+    const starRect = star.getBoundingClientRect();
+
+    const starCenterX = starRect.left + starRect.width / 2;
+    const starCenterY = starRect.top + starRect.height / 2;
+
+    const mw = message.offsetWidth;
+    const mh = message.offsetHeight;
+
+    let viewportLeft = starCenterX - mw / 2;
+    let viewportTop = starCenterY - mh - 28;
+
+    // not enough room above the star — show the message below it instead
+    if (viewportTop < margin) {
+      viewportTop = starRect.bottom + 20;
+    }
+
+    // clamp fully inside the viewport, using real message dimensions
+    viewportLeft = Math.max(margin, Math.min(viewportLeft, window.innerWidth - mw - margin));
+    viewportTop = Math.max(margin, Math.min(viewportTop, window.innerHeight - mh - margin));
+
+    // message is absolutely positioned relative to #star-field, so convert
+    // from viewport coordinates to coordinates relative to that container
+    message.style.left = (viewportLeft - containerRect.left) + "px";
+    message.style.top = (viewportTop - containerRect.top) + "px";
+  }
+
   function handleStarClick(star, message) {
+    const text = STAR_MESSAGES[nextMessageIndex];
+    nextMessageIndex++;
+
+    message.textContent = text;
     star.classList.add("used");
+
+    // measure and position now that the message has real text in it
+    positionStarMessage(star, message);
     message.classList.add("show");
+
     starsClicked++;
     updateProgress();
 
     // let each message breathe, then drift away naturally
     setTimeout(() => {
       message.style.opacity = "0";
-      message.style.transform = "translate(-50%, -80%) scale(0.92)";
-    }, 3400);
+      message.style.transform = "translateY(-24px) scale(0.92)";
+    }, 2600);
 
     if (starsClicked >= STAR_MESSAGES.length) {
       setTimeout(startConvergenceAndAdvance, 2200);
