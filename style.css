@@ -306,7 +306,7 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   backdrop-filter: blur(10px);
-  transform: translate(-50%, -50%) scale(0.9);
+  transform: scale(0.9);
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
@@ -315,7 +315,7 @@ html, body {
 
 .star-message.show {
   opacity: 1;
-  transform: translate(-50%, -60%) scale(1);
+  transform: translateY(-10px) scale(1);
 }
 
 .star-progress {
@@ -718,6 +718,28 @@ html, body {
   }
 
   /* ---------- Scene 5 — letter / envelope ---------- */
+  /* Root cause of the cut-off button: .scene centers content with
+     align-items + a fixed, non-scrolling viewport height. If the card
+     grows taller than the screen, the overflow is clipped equally above
+     and below, hiding the button. Scoped to Scene 5 only (not every
+     scene) since this is the one whose content can now exceed the
+     viewport on small phones. */
+  #scene-5 {
+    align-items: stretch;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: max(3vh, 16px);
+    padding-bottom: max(6vh, 32px);
+  }
+
+  #scene-5 .scene-inner {
+    /* auto margins center the content when it fits, and — unlike
+       align-items: center — scroll cleanly to reveal the full card,
+       top to bottom, when it doesn't */
+    margin: auto 0;
+    width: 100%;
+  }
+
   .letter-prompt {
     gap: 1.4rem;
   }
