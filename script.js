@@ -20,7 +20,7 @@ Happy Birthday. 🎂 💖 ✨`;
 
 // Optional background music. Leave as an empty string to skip audio entirely.
 // If you add a file, place it at assets/music.mp3 and set the path below.
-const MUSIC_SRC = "assets/music.mp3";
+const MUSIC_SRC = "music.mp3";
 
 // Emojis used for the brief celebratory burst behind the Scene 4 reveal.
 const REVEAL_EMOJIS = ["🎈", "🎈", "🎂", "💖", "✨", "🎉", "❤️"];
