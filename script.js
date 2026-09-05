@@ -2,7 +2,7 @@
    CUSTOMIZE ME
    This is the only section you need to touch to personalize the site.
    ========================================================================= */
-const NAME = "Noboni";
+const NAME = "Her Name";
 
 const PERSONAL_MESSAGE = `I could have just sent you a normal
 Happy Birthday message.
@@ -16,11 +16,11 @@ you genuinely enjoy, people who make
 you happy, and moments you'll want
 to remember.
 
-Happy Birthday. 🎂 ✨ 💖`;
+Happy Birthday. 🌙`;
 
 // Optional background music. Leave as an empty string to skip audio entirely.
 // If you add a file, place it at assets/music.mp3 and set the path below.
-const MUSIC_SRC = "music.mp3";
+const MUSIC_SRC = "assets/music.mp3";
 
 // Emojis used for the brief celebratory burst behind the Scene 4 reveal.
 const REVEAL_EMOJIS = ["🎈", "🎈", "🎂", "💖", "✨", "🎉", "❤️"];
@@ -476,6 +476,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const openLetterBtn = document.getElementById("open-letter-btn");
   const finishLetterBtn = document.getElementById("finish-letter-btn");
 
+  // The message may contain manual line breaks the user typed while
+  // writing it (like the placeholder text does). Those breaks were
+  // authored for a specific card width, so displaying them verbatim
+  // (via white-space: pre-line) causes double-wrapping at other font
+  // sizes/widths — short authored lines wrap again mid-sentence into
+  // orphan words. Blank lines between paragraphs are real paragraph
+  // breaks and are kept; single line breaks inside a paragraph are
+  // collapsed into spaces so the browser wraps each paragraph naturally
+  // based on the card's real width.
+  function formatMessageForWrap(text) {
+    return text
+      .split(/\n{2,}/)
+      .map((paragraph) => paragraph.replace(/\s*\n\s*/g, " ").trim())
+      .join("\n\n");
+  }
+
   openLetterBtn.addEventListener("click", async () => {
     letterPrompt.style.opacity = "0";
     await wait(500);
@@ -484,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await wait(50);
     envelopeCard.classList.add("open");
     await wait(600);
-    typeMessage(PERSONAL_MESSAGE);
+    typeMessage(formatMessageForWrap(PERSONAL_MESSAGE));
   });
 
   function typeMessage(text) {
