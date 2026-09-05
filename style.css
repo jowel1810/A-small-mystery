@@ -750,14 +750,16 @@ html, body {
   }
 
   .envelope__card {
-    padding: 1.7rem 1.2rem;
+    padding: 1.6rem 0.85rem;
     border-radius: 16px;
   }
 
   .envelope__text {
     font-size: 1.3rem;
-    line-height: 1.85;
+    line-height: 1.8;
+    letter-spacing: 0.005em;
     margin-bottom: 1.5rem;
+    padding: 0 0.15rem;
   }
 
   /* ---------- Scene 6 — final moment ---------- */
