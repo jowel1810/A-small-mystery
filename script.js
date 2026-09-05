@@ -16,7 +16,7 @@ you genuinely enjoy, people who make
 you happy, and moments you'll want
 to remember.
 
-Happy Birthday. 🎂 ✨  💖`;
+Happy Birthday. 🎂 ✨ 💖`;
 
 // Optional background music. Leave as an empty string to skip audio entirely.
 // If you add a file, place it at assets/music.mp3 and set the path below.
