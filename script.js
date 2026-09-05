@@ -376,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       message.style.opacity = "0";
       message.style.transform = "translateY(-24px) scale(0.92)";
-    }, 3800);
+    }, 4000);
 
     if (starsClicked >= STAR_MESSAGES.length) {
       setTimeout(startConvergenceAndAdvance, 2200);
