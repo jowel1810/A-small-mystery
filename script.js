@@ -2,7 +2,7 @@
    CUSTOMIZE ME
    This is the only section you need to touch to personalize the site.
    ========================================================================= */
-const NAME = "Her Name";
+const NAME = "Noboni";
 
 const PERSONAL_MESSAGE = `I could have just sent you a normal
 Happy Birthday message.
@@ -16,7 +16,7 @@ you genuinely enjoy, people who make
 you happy, and moments you'll want
 to remember.
 
-Happy Birthday. 🌙`;
+Happy Birthday. 🎂 ✨  💖`;
 
 // Optional background music. Leave as an empty string to skip audio entirely.
 // If you add a file, place it at assets/music.mp3 and set the path below.
